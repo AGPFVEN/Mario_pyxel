@@ -1,7 +1,7 @@
 from collisionManager import Collision_manager
 from basic_object import Basic_object
 
-#This object facilitates the coding of the board because it 
+#This object facilitates the coding because i won't need to declare the type of object in the board
 class Floor_handler(Basic_object):
     def __init__(self, basic_object:Basic_object, collision_manager:Collision_manager):
         #The sprites that all the elements will have
@@ -25,11 +25,9 @@ class Floor_handler(Basic_object):
 
     #This function creates blocks (by programing them)
     #It is used for the floor because it`s faster to develop with a loop
-
     def create_floor(self, new_x, new_y):
         self.collision_manager.all_objects.append(Basic_object(new_x, new_y, self.sprite))
-
-
+        
         #information = [new_x, new_y, ]
         #self.floor.append(information)
         #self.collision_manager.add_collider_x(information)
