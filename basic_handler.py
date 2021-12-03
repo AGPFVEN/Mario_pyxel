@@ -26,10 +26,10 @@ class Basic_handler(Basic_object):
     #This function creates blocks (by programing them)
     #It is used for the floor because it`s faster to develop with a loop
     def create_basic(self, new_x, new_y):
-        print("in")
         self.collision_manager.all_objects.append(Basic_object(new_x, new_y, self.object_sprite))
         
-        #information = [new_x, new_y, ]
+        information = [new_x, new_y, ]
+        print(information)
         #self.floor.append(information)
         #self.collision_manager.add_collider_x(information)
 
