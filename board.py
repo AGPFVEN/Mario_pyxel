@@ -25,7 +25,7 @@ class Board:
         #self.mario = Mario(0,0, True)
 
         #Creating a handler in order to create an object just with coordintes
-        self.floor_handler = Basic_handler(Basic_object(0, 0, (0, 0, 1, 32, 16, 16)), self.collision_manager)
+        self.floor_handler = Basic_handler(Basic_object(0, 0, (0, 32, 0, 16, 16)), self.collision_manager)
 
         #Floor sprite
         sprite_floor = self.floor_handler.object_sprite
@@ -53,7 +53,7 @@ class Board:
         #NEED TO PUT THE COLLIDERS IN A VARIABLE AND THEN USE IT IN THE INIT OF MARIO ??????
 
         #Objects which are on the scene
-        print(self.collision_manager.all_objects)
+        #print(self.collision_manager.all_objects)
         self.collision_manager.update_on_scene_objects(self.width)
         self.objects_on_scene = self.collision_manager.on_scene_objects
 
@@ -90,19 +90,18 @@ class Board:
 
         #Drawing each block of floorhandler
         for i in self.collision_manager.on_scene_objects:
-            print(i)
             pyxel.blt(
                 #Position of each block
                 i.x, i.y,
 
                 #Image bank
-                self.floor_handler.sprite[0],
+                self.floor_handler.object_sprite[0],
 
                 #Starting point
-                self.floor_handler.sprite[1], self.floor_handler.sprite[2],
+                self.floor_handler.object_sprite[1], self.floor_handler.object_sprite[2],
 
                 #Size of the image in the bank
-                self.floor_handler.sprite[3], self.floor_handler.sprite[4]
+                self.floor_handler.object_sprite[3], self.floor_handler.object_sprite[4]
             )
 
         #pyxel.text(0, 0, "MARIO", 7)

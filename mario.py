@@ -62,14 +62,14 @@ class Mario:
             #Down collider
             if self.y + self.sprite[4] == i.y and (self.x + self.sprite[3] > i.x) and self.x < i.x + i.sprite[4]:
                 self.collading_with_mario_down.append(type(i))
-                print(self.collading_with_mario_down)
+                #print(self.collading_with_mario_down)
 
             #Upper collider
             if self.y == i.y + i.sprite[4] and self.x + self.sprite[3] >= i.x and self.x <= i.x + i.sprite[3]:
                 self.collading_with_mario_up.append(type(i))
 
             #Right collider
-            if ((self.y + self.sprite[4] > i.y and self.y < i.x + i.sprite[4]) or 
+            if ((self.y + self.sprite[4] > i.y and self.y < i.y + i.sprite[3]) or 
                 (self.y == i.y and self.y + self.sprite[4] == i.y + i.sprite[4])) and self.x + self.sprite[3] == i.x:
 
                 self.collading_with_mario_right.append(type(i))
