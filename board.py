@@ -1,38 +1,41 @@
-from _typeshed import Self
-from floorhandler import Floor_handler
+from basic_handler import Basic_handler
 from mario import Mario
 from collisionManager import Collision_manager
-from basic_object import Floor
+from basic_object import Basic_object
 import pyxel
-import time
 
 class Board:
     """ This class contains all the information needed to represent the
     board"""
     def __init__(self, w: int, h: int):
-        """ The parameters are the width and height of the board"""
+        #The parameters are the width and height of the board
         self.width = w
         self.height = h
 
+        #These is the initial position of mario
+        initial_mario_x = self.width / 2 + .5
+        initial_mario_y = self.height / 2 + 0.5
+
+        #Creating the collision manager
         self.collision_manager = Collision_manager()
-        self.floor_handler = Floor_handler(16, 16, self.collision_manager)
-
-        #Create all the floorhandler in the window
-        self.all_objects = [
-            Floor(0, )
-        ]
-        self.floor_handler.create_floor(0, self.height - self.floor_handler.sprite[4])
-        self.floor_handler.create_floor(16 * 3, self.height - self.floor_handler.sprite[4] * 2)
-        for i in range(int((int(self.width / 16)) / 2)):
-            self.floor_handler.create_floor(32 + 16 + (i * self.floor_handler.sprite[3]), self.height - self.floor_handler.sprite[4])
-        self.floor_handler.create_floor(0,self.height - 2 * self.floor_handler.sprite[3])
-
-        #self.collision_manager.create_collider()
 
         # This creates a Mario at the middle of the screen in x and at y = 200
         # facing right
-        self.mario = Mario(self.width / 2 + .5, self.height / 2 + 0.5, True, self.collision_manager)
+        self.mario = Mario(initial_mario_x, initial_mario_y, "right", self.collision_manager)
         #self.mario = Mario(0,0, True)
+
+        #Creating a handler in order to create an object just with coordintes
+        self.floor_handler = Basic_handler(Basic_object(0, 0, (0, 0, 1, 32, 16, 16)), self.collision_manager)
+
+        #Floor sprite
+        sprite_floor = self.floor_handler.object_sprite
+
+        #Create all the floorhandler in the window
+        self.floor_handler.create_basic(1, self.height - sprite_floor[4])
+        self.floor_handler.create_basic(16 * 3, self.height - sprite_floor[4] * 2)
+        for i in range(int((int(self.width / 16)) / 2)):
+            self.floor_handler.create_basic(32 + 16 + (i * sprite_floor[3]), self.height - sprite_floor[4])
+        self.floor_handler.create_basic(0,self.height - 2 * sprite_floor[3])
 
         #Time
         #TO DO: time left counter
@@ -42,21 +45,27 @@ class Board:
         #TO DO: Implement score in conditions
         self.score = 0
 
-        print(self.floor_handler.floorhandler)
+        #print(self.floor_handler.floorhandler)
         #print(self.floor_handler.floor_not_fall)
 
     def update(self):
         #Here will be th colliders summed in just one list----------REVIEW HOW TO COPY ARRAYS SAFELY
         #NEED TO PUT THE COLLIDERS IN A VARIABLE AND THEN USE IT IN THE INIT OF MARIO ??????
+
+        #Objects which are on the scene
+        print(self.collision_manager.all_objects)
+        self.collision_manager.update_on_scene_objects(self.width)
+        self.objects_on_scene = self.collision_manager.on_scene_objects
+
         self.mario.obstacles_updater(self.collision_manager)
         (self.mario.collisions())
 
         if pyxel.btnp(pyxel.KEY_Q):
             pyxel.quit()
         elif pyxel.btn(pyxel.KEY_RIGHT):
-            self.mario.accelerate('right', self.width, self.collision_manager.collision_list_x)
+            self.mario.accelerate('right', self.width, self.objects_on_scene)
         elif pyxel.btn(pyxel.KEY_LEFT):
-            self.mario.accelerate('left', self.width, self.collision_manager.collision_list_x)
+            self.mario.accelerate('left', self.width, self.objects_on_scene)
 
         self.mario.jump(pyxel.btnr(pyxel.KEY_UP))
         
@@ -80,10 +89,11 @@ class Board:
                   self.mario.sprite[4], 12)
 
         #Drawing each block of floorhandler
-        for i in self.floor_handler.floorhandler:
+        for i in self.collision_manager.on_scene_objects:
+            print(i)
             pyxel.blt(
                 #Position of each block
-                i[0], i[1],
+                i.x, i.y,
 
                 #Image bank
                 self.floor_handler.sprite[0],

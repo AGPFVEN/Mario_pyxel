@@ -1,3 +1,4 @@
+from basic_object import Basic_object
 from collisionManager import Collision_manager
 import common_values
 
@@ -28,10 +29,10 @@ class Mario:
         self.mario_y_size = self.sprite[4]
 
         #This is are the obstales which mario can collide with
-        self.objects = collision_manager.objects_list_x
+        self.objects = collision_manager.on_scene_objects
     
     def obstacles_updater(self, collision_manager:Collision_manager):
-        self.objects = collision_manager.objects_list_x
+        self.objects = collision_manager.on_scene_objects
 
     def accelerate(self, direction: str, size: int, prohibited_zones: list):
         """ This is an example of a method that moves Mario, it receives the
@@ -59,25 +60,25 @@ class Mario:
         #Colliders In a if all the conditions are checked ?? or as soon as it is false?????'
         for i in self.objects:
             #Down collider
-            if self.y + self.sprite[4] == i[1] and (self.x + self.sprite[3] > i[0]) and self.x < i[0] + i[3]:
-                self.collading_with_mario_down.append(i[2])
+            if self.y + self.sprite[4] == i.y and (self.x + self.sprite[3] > i.x) and self.x < i.x + i.sprite[4]:
+                self.collading_with_mario_down.append(type(i))
                 print(self.collading_with_mario_down)
 
             #Upper collider
-            if self.y == i[1] + i[4] and self.x + self.sprite[3] >= i[0] and self.x <= i[0] + i[3]:
-                self.collading_with_mario_up.append(i[2])
+            if self.y == i.y + i.sprite[4] and self.x + self.sprite[3] >= i.x and self.x <= i.x + i.sprite[3]:
+                self.collading_with_mario_up.append(type(i))
 
             #Right collider
-            if ((self.y + self.sprite[4] > i[1] and self.y < i[1] + i[4]) or 
-                (self.y == i[1] and self.y + self.sprite[4] == i[1] + i[4])) and self.x + self.sprite[3] == i[0]:
+            if ((self.y + self.sprite[4] > i.y and self.y < i.x + i.sprite[4]) or 
+                (self.y == i.y and self.y + self.sprite[4] == i.y + i.sprite[4])) and self.x + self.sprite[3] == i.x:
 
-                self.collading_with_mario_right.append(i)
+                self.collading_with_mario_right.append(type(i))
 
             #Left collider
-            if ((self.y + self.sprite[4] > i[1] and self.y < i[1] + i[4]) or
-                (self.y == i[1] and self.y + self.sprite[4] == i[1] + i[4])) and self.x == i[0] + i[4] in range(i[0] + i[4], i[0], -1):
+            if ((self.y + self.sprite[4] > i.y and self.y < i.y + i.sprite[4]) or
+                (self.y == i.y and self.y + self.sprite[4] == i.y + i.sprite[4])) and self.x == i.y + i.sprite[4] in range(i.x + i.sprite[4], i.x, -1):
 
-                    self.collading_with_mario_left.append(i[2])
+                    self.collading_with_mario_left.append(type(i))
         
         if (len(self.collading_with_mario_down) == 1 and self.acceleration_y  == 0):
             self.y += 1
