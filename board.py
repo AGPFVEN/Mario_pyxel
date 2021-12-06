@@ -32,7 +32,8 @@ class Board:
 
         #Create all the floorhandler in the window
         self.floor_handler.create_basic(1, self.height - sprite_floor[4])
-        self.floor_handler.create_basic(16 * 3, self.height - sprite_floor[4] * 2)
+        self.floor_handler.create_basic(16 * 4, self.height - sprite_floor[4] * 2)
+        self.floor_handler.create_basic(16 * 6, self.height - sprite_floor[4] * 4)       
         for i in range(int((int(self.width / 16)) / 2)):
             self.floor_handler.create_basic(32 + 16 + (i * sprite_floor[3]), self.height - sprite_floor[4])
         self.floor_handler.create_basic(0,self.height - 2 * sprite_floor[3])

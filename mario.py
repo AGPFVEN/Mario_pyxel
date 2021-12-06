@@ -60,7 +60,7 @@ class Mario:
         #Colliders In a if all the conditions are checked ?? or as soon as it is false?????'
         for i in self.objects:
             #Down collider
-            if self.y + self.sprite[4] == i.y and (self.x + self.sprite[3] > i.x) and self.x < i.x + i.sprite[4]:
+            if self.y + self.sprite[4] == i.y and (self.x + self.sprite[3] > i.x) and self.x < i.x + i.sprite[3]:
                 self.collading_with_mario_down.append(type(i))
                 #print(self.collading_with_mario_down)
 
@@ -76,7 +76,7 @@ class Mario:
 
             #Left collider
             if ((self.y + self.sprite[4] > i.y and self.y < i.y + i.sprite[4]) or
-                (self.y == i.y and self.y + self.sprite[4] == i.y + i.sprite[4])) and self.x == i.y + i.sprite[4] in range(i.x + i.sprite[4], i.x, -1):
+                (self.y == i.y and self.y + self.sprite[4] == i.y + i.sprite[4])) and self.x == i.x + i.sprite[3]:
 
                     self.collading_with_mario_left.append(type(i))
         
@@ -87,16 +87,12 @@ class Mario:
             self.acceleration_y = 0
 
         if (len(self.collading_with_mario_right) > 1):
-            print(self.collading_with_mario_right)
-            print([self.x, self.y])
             if(self.acceleration_x > 0):
                 self.acceleration_x = 0
 
         if (len(self.collading_with_mario_left) > 1): 
-            print(self.collading_with_mario_left)
-            print([self.x, self.y])
-            #if(self.acceleration_x <= 0):
-            self.acceleration_x = 0
+            if(self.acceleration_x <= 0):
+                self.acceleration_x = 0
         #print(self.acceleration_x)
         #return self.collading_with_mario_down
 
