@@ -34,6 +34,7 @@ class Board:
         self.floor_handler.create_basic(1, self.height - sprite_floor[4])
         self.floor_handler.create_basic(16 * 4, self.height - sprite_floor[4] * 2)
         self.floor_handler.create_basic(16 * 6, self.height - sprite_floor[4] * 4)
+        self.floor_handler.create_basic(16 * 10, self.height - sprite_floor[4] * 2)
         print(self.floor_handler.collision_manager.all_objects[2].y + 16)       
         for i in range(int((int(self.width / 16)) / 2)):
             self.floor_handler.create_basic(32 + 16 + (i * sprite_floor[3]), self.height - sprite_floor[4])
@@ -59,7 +60,7 @@ class Board:
         self.collision_manager.update_on_scene_objects(self.width)
         self.objects_on_scene = self.collision_manager.on_scene_objects
 
-        (self.mario.colliding_with(self.collision_manager))
+        (self.mario.dynamic_collision(self.collision_manager))
 
         if pyxel.btnp(pyxel.KEY_Q):
             pyxel.quit()
