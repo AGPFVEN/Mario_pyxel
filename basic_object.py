@@ -9,7 +9,3 @@ class Basic_object:
         
         #The sprites that all the elements will have
         self.sprite = sprite
-
-        #Size of all the floors of x * y size
-        self.size_X = self.sprite[3]
-        self.size_y = self.sprite[4]

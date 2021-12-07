@@ -21,7 +21,7 @@ class Board:
 
         # This creates a Mario at the middle of the screen in x and at y = 200
         # facing right
-        self.mario = Mario(initial_mario_x, initial_mario_y, "right", self.collision_manager)
+        self.mario = Mario(initial_mario_x, initial_mario_y, (0, 1, 112, 14, 16), "right")
         #self.mario = Mario(0,0, True)
 
         #Creating a handler in order to create an object just with coordintes
@@ -33,7 +33,8 @@ class Board:
         #Create all the floorhandler in the window
         self.floor_handler.create_basic(1, self.height - sprite_floor[4])
         self.floor_handler.create_basic(16 * 4, self.height - sprite_floor[4] * 2)
-        self.floor_handler.create_basic(16 * 6, self.height - sprite_floor[4] * 4)       
+        self.floor_handler.create_basic(16 * 6, self.height - sprite_floor[4] * 4)
+        print(self.floor_handler.collision_manager.all_objects[2].y + 16)       
         for i in range(int((int(self.width / 16)) / 2)):
             self.floor_handler.create_basic(32 + 16 + (i * sprite_floor[3]), self.height - sprite_floor[4])
         self.floor_handler.create_basic(0,self.height - 2 * sprite_floor[3])
@@ -58,8 +59,7 @@ class Board:
         self.collision_manager.update_on_scene_objects(self.width)
         self.objects_on_scene = self.collision_manager.on_scene_objects
 
-        self.mario.obstacles_updater(self.collision_manager)
-        (self.mario.collisions())
+        (self.mario.colliding_with(self.collision_manager))
 
         if pyxel.btnp(pyxel.KEY_Q):
             pyxel.quit()

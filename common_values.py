@@ -1,1 +1,1 @@
-gravity = 5
+gravity = 1
