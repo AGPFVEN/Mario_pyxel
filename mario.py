@@ -1,7 +1,7 @@
-from dynamic_object import Dinamic_object
+from dynamic_object import Dynamic_object
 import common_values
 
-class Mario(Dinamic_object):
+class Mario(Dynamic_object):
     def __init__(self, x: int, y: int, sprite: tuple, dir:str):
         super().__init__(x, y, sprite)
 
@@ -29,6 +29,14 @@ class Mario(Dinamic_object):
     def move(self):
        # if(self.acceleration_x != 0):
             #self.x += (self.acceleration_x)
+        
+        if (len(self.collading_right) > 1):
+            if(self.acceleration_x > 0):
+                self.acceleration_x = 0
+
+        if (len(self.collading_left) > 1): 
+            if(self.acceleration_x <= 0):
+                self.acceleration_x = 0
 
         if self.acceleration_x > 0 and len(self.collading_right) == 1:
             self.x += 0.5
@@ -39,7 +47,7 @@ class Mario(Dinamic_object):
             self.acceleration_x += 0.5
 
         if(self.acceleration_y != 0):
-            self.y -= common_values.gravity
+            self.y -= 0.5
 
         if(self.acceleration_y > 0):
             self.acceleration_y -= 0.5
@@ -50,4 +58,4 @@ class Mario(Dinamic_object):
     #The jump is done to
     def jump(self, user_input):
         if (user_input and len(self.collading_down) > 1):
-            self.acceleration_y -= 10
+            self.acceleration_y -= 20
