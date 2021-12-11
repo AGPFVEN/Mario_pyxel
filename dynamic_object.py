@@ -15,8 +15,8 @@ class Dynamic_object(Collisionable_object):
     def dynamic_collision(self, collision_manager: Collision_manager):
         self.colliding_with(collision_manager)
 
-        if (len(self.collading_down) == 1 and self.acceleration_y  == 0):
+        if (len(self.collading_down) == 0 and self.acceleration_y  == 0):
             self.y += 1
 
-        if (len(self.collading_up) > 1):
+        if (len(self.collading_up) > 0):
             self.acceleration_y = 0

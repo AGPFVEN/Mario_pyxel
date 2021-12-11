@@ -14,7 +14,7 @@ class Basic_handler(Basic_object):
         #This object is added in order to add the objects of this type
         self.collision_manager = collision_manager
 
-        #This list will contain all the objects of the same type
+        
         self.container_of = []
 
     #This function creates blocks (by programing them in the board)
