@@ -17,7 +17,7 @@ class Board:
         #These is the initial position of mario and its sprites
         initial_mario_x = self.width / 2 + .5
         initial_mario_y = self.height / 2 + 0.5
-        self.mario_sprite = (0, 1, 112, 14, 16)
+        self.mario_sprite = [0, 1, 112, 14, 16]
         self.super_mario_sprite = (0, 48, 64, 16, 32)
 
         #Creating the collision manager
@@ -43,7 +43,7 @@ class Board:
         #Create all the floorhandler in the window
         self.floor_handler.create_basic(1, self.height - sprite_floor[4])
         self.floor_handler.create_basic(16 * 4, self.height - sprite_floor[4] * 2)
-        self.floor_handler.create_basic(16 * 6, self.height - sprite_floor[4] * 4)
+        self.floor_handler.create_basic(16 * 6, self.height - sprite_floor[4] * 4 - 5)
         self.floor_handler.create_basic(16 * 10, self.height - sprite_floor[4] * 2)
 
         #print(self.floor_handler.collision_manager.all_objects[2].x)
@@ -53,7 +53,7 @@ class Board:
             self.floor_handler.create_basic(32 + 16 + (i * sprite_floor[3]), self.height - sprite_floor[4])
         self.floor_handler.create_basic(0, self.height - 2 * sprite_floor[3])
 
-        self.goomba_handler.create_basic(16 * 5, self.height - self.mushroom_handler.original.sprite[4] * 2 - 4)
+        self.mushroom_handler.create_basic(16 * 5, self.height - self.mushroom_handler.original.sprite[4] * 2 - 4)
 
         #Time
         #TO DO: time left counter
@@ -88,9 +88,9 @@ class Board:
 
             #Mushroom behavior
             if i.sprite == self.mushroom_handler.original.sprite:
-                old_size_x = self.mario.sprite[4]
+                old_size_y = self.mario.sprite[4]
                 self.mario.sprite = self.super_mario_sprite
-                self.mario.y -= (self.mario.sprite[4] - old_size_x)
+                self.mario.y -= (self.mario.sprite[4] - old_size_y)
                 i.delete_from_all(self.collision_manager.all_objects, self.mushroom_handler.container_of) 
 
             #Goomba, koopa troppa and koopa shell behaviors
@@ -142,9 +142,15 @@ class Board:
                 #self.mario.sprite = (0, 48, 64, 16, 32)# We draw Mario taking the values from the mario object
  
         # Parameters are x, y, image bank, the starting x and y and the size
-        pyxel.blt(self.mario.x, self.mario.y, self.mario.sprite[0],
-                  self.mario.sprite[1], self.mario.sprite[2], self.mario.sprite[3],
-                  self.mario.sprite[4], 12)
+        if(self.mario.direction == "right"):
+            pyxel.blt(self.mario.x, self.mario.y, self.mario.sprite[0],
+                    self.mario.sprite[1], self.mario.sprite[2], self.mario.sprite[3],
+                    self.mario.sprite[4], 12)
+        else:
+
+            pyxel.blt(self.mario.x, self.mario.y, self.mario.sprite[0],
+                    self.mario.sprite[1], self.mario.sprite[2], -self.mario.sprite[3],
+                    self.mario.sprite[4], 12)
 
         #Drawing each block of floorhandler
         for i in self.collision_manager.on_scene_objects:
@@ -168,3 +174,6 @@ class Board:
         pyxel.text(0, 0, "MARIO", 7)
         #pyxel.text(0, 16, str(self.score_array))
         pyxel.text(0, 32, str(str(self.mario.x) + " " + str(self.mario.y)), 7)
+
+    #This could be done to implement checkpoints with merely implement a change in a list
+    #def reset_level(list_of_check, collision_manager)

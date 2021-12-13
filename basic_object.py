@@ -2,7 +2,7 @@
 #As this is the most basic block this will be the floor
 
 class Basic_object:
-    def __init__(self, x, y,  sprite:tuple):
+    def __init__(self, x, y,  sprite:list):
         #Position of te object
         self.x = x
         self.y = y
