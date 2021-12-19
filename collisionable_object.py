@@ -7,7 +7,7 @@ class Collisionable_object(Basic_object):
 
     def colliding_with(self, collision_manager:Collision_manager):
         #Setting up the object which are going to collide with the object
-        objects = collision_manager.on_scene_objects
+        self.objects = collision_manager.on_scene_objects
 
         #This algorithm is done to establish the bounds where mario can collide
         self.collading_down = []
@@ -17,7 +17,7 @@ class Collisionable_object(Basic_object):
         self.collading_all = []
 
         #Colliders In a if all the conditions are checked ?? or as soon as it is false?????'
-        for i in objects:
+        for i in self.objects:
             #Down collider
             if self.y + self.sprite[4] == i.y and (self.x + self.sprite[3] > i.x) and self.x < i.x + i.sprite[3]:
                 self.collading_down.append(i)

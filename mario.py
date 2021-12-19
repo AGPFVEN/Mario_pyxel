@@ -2,8 +2,13 @@ from dynamic_object import Dynamic_object
 from collisionManager import Collision_manager
 
 class Mario(Dynamic_object):
-    def __init__(self, x: int, y: int, sprite: tuple, dir:str):
+    def __init__(self, x: int, y: int, sprite: list, sprite_original:list ,sprite_falling:list , dir:str):
         super().__init__(x, y, sprite)
+
+        self.sprite_original = sprite_original
+
+        #Sprite of mario falling
+        self.sprite_falling = sprite_falling
 
         #Initial direction of Mario
         self.direction = dir
@@ -41,12 +46,11 @@ class Mario(Dynamic_object):
                 self.acceleration_x = 0
 
         if self.acceleration_x > 0 and len(self.collading_right) == 0:
-            self.x += 0.5
+            self.x += 1
             self.acceleration_x -= 0.5
         
         if self.acceleration_x < 0 and len(self.collading_left) == 0:
-            self.sprite[3]
-            self.x -= 0.5
+            self.x -= 1
             self.acceleration_x += 0.5
 
         if(self.acceleration_y != 0):
@@ -67,6 +71,6 @@ class Mario(Dynamic_object):
         super().dynamic_collision(collision_manager)
 
         if (len(self.collading_down) == 0):
-            self.sprite = [0, 1, 112, 14, 16]
+            self.sprite = self.sprite_falling
         else:
-            self.sprite = []
+            self.sprite = self.sprite_original
